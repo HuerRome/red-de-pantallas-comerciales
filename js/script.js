@@ -10,91 +10,105 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 "use strict";
 
+/* ==========================================
+   DATA
+========================================== */
+
 const products = [
-  {
-    name: "Mozzarella Cremac",
-    price: "$5.999",
-    unit: "kg",
-    image: "img/mozzarella.png"
-  },
-  {
-    name: "Cerveza Patagonia",
-    price: "$2.999",
-    unit: "c/u",
-    image: "img/cerveza.png"
-  },
-  {
-    name: "Jamón Cocido",
-    price: "$4.500",
-    unit: "kg",
-    image: "img/jamon.png"
-  },
-  {
-    name: "Salame",
-    price: "$3.800",
-    unit: "kg",
-    image: "img/salame.png"
-  },
-    {
-    name: "Yogurt Cotali",
-    price: "$3.800",
-    unit: "kg",
-    image: "img/salame.png"
-  }
+  { id: 1, name: "Queso Cremoso", price: 2999, discount: 7, image: "assets/img/1.jpg" },
+  { id: 2, name: "Leche Entera", price: 2999, discount: 7, image: "assets/img/2.jpg" },
+  { id: 3, name: "Pepsi 2L", price: 2999, discount: 7, image: "assets/img/3.jpg" },
+  { id: 4, name: "Vino Malbec", price: 2999, discount: 7, image: "assets/img/4.jpg" },
+  { id: 5, name: "Azúcar", price: 2999, discount: 7, image: "assets/img/5.jpg" }
 ];
 
-function renderProducts(data) {
-  const app = document.getElementById("app");
+let currentProducts = [...products];
+let interval = null;
 
-  app.innerHTML = `
-    <div class="grid">
-      ${data.map(product => `
-        <div class="card">
-          <img src="${product.image}" alt="${product.name}">
-          <div class="product-name">${product.name}</div>
-          <div class="price">${product.price}</div>
-          <div class="unit">${product.unit}</div>
-        </div>
-      `).join("")}
+/* ==========================================
+   RENDER
+========================================== */
+
+function renderProducts() {
+  const featuredContainer = document.getElementById("featured");
+  const gridContainer = document.getElementById("productGrid");
+
+  featuredContainer.innerHTML = "";
+  gridContainer.innerHTML = "";
+
+  const featured = currentProducts[0];
+  const gridItems = currentProducts.slice(1, 5);
+
+  // Render featured
+  featuredContainer.innerHTML = `
+    <div class="featured-product">
+      <img src="${featured.image}" alt="${featured.name}">
+      <h1 class="product-title">${featured.name}</h1>
+      <div class="price-box">$ ${featured.price}</div>
+    </div>
+    <div class="discount-badge">
+      ${featured.discount}% OFF
     </div>
   `;
+
+  // Render grid
+  gridItems.forEach(product => {
+    const item = document.createElement("div");
+    item.classList.add("grid-item");
+
+    item.innerHTML = `
+      <img src="${product.image}" alt="${product.name}">
+      <div class="grid-title">${product.name}</div>
+      <div class="price-stack">
+        <div class="small-price">$ ${product.price}</div>
+        <div class="small-price">$ ${product.price}</div>
+        <div class="small-price">$ ${product.price}</div>
+      </div>
+      <div class="grid-discount">${product.discount}%</div>
+    `;
+
+    gridContainer.appendChild(item);
+  });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderProducts(products);
-});
+/* ==========================================
+   ROTACIÓN TIPO SIGNAGE
+========================================== */
 
-
-let currentIndex = 0;
-
-function nextSlide() {
-  currentIndex += 4;
-
-  if (currentIndex >= products.length) {
-    currentIndex = 0;
-  }
-
-  const visibleProducts = products.slice(currentIndex, currentIndex + 4);
-
-  renderProducts(visibleProducts);
+function rotateProducts() {
+  // Rotación infinita tipo carrusel
+  currentProducts.push(currentProducts.shift());
+  renderProducts();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderProducts(products.slice(0, 4));
-  setInterval(nextSlide, 8000);
-});
+/* ==========================================
+   INIT
+========================================== */
+
+function initCarousel() {
+  renderProducts();
+
+  interval = setInterval(() => {
+    requestAnimationFrame(() => {
+      rotateProducts();
+    });
+  }, 4000);
+
+  // Pause on hover
+  document.querySelector(".signage").addEventListener("mouseenter", () => {
+    clearInterval(interval);
+  });
+
+  document.querySelector(".signage").addEventListener("mouseleave", () => {
+    initCarousel();
+  });
+}
+
+/* ==========================================
+   START
+========================================== */
+
+document.addEventListener("DOMContentLoaded", initCarousel);
+
