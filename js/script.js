@@ -60,13 +60,7 @@ function renderProducts() {
 
     item.innerHTML = `
       <img src="${product.image}" alt="${product.name}">
-      <div class="grid-title">${product.name}</div>
-      <div class="price-stack">
-        <div class="small-price">$ ${product.price}</div>
-        <div class="small-price">$ ${product.price}</div>
-        <div class="small-price">$ ${product.price}</div>
-      </div>
-      <div class="grid-discount">${product.discount}%</div>
+
     `;
 
     gridContainer.appendChild(item);
@@ -94,7 +88,7 @@ function initCarousel() {
     requestAnimationFrame(() => {
       rotateProducts();
     });
-  }, 4000);
+  }, 8000);
 
   // Pause on hover
   document.querySelector(".signage").addEventListener("mouseenter", () => {
