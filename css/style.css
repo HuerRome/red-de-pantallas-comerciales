@@ -70,104 +70,106 @@ button {
 
 /* ====================================================================================
    DESARROLLO DE LA PÁGINA WEB
-==================================================================================== */
+ ==================================================================================== */
 
-/* ==========================================
-   SIGNAGE 1920x1080
-========================================== */
 
-.signage {
-  width: 1920px;
-  height: 1080px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 40% 30% 30%;
-  grid-template-rows: 50% 35% 15%;
-  background: #ffffff;
-  overflow: hidden;
-  position: relative;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-/* Reset interno de secciones */
-.section {
-  position: relative;
-  overflow: hidden;
+body{
+background:#000;
+background-color: #e52321;
+overflow:hidden;
+font-family:sans-serif;
 }
 
-.section img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* CONTENEDOR */
+
+.slider{
+width:100vw;
+height:100vh;
+overflow:hidden;
+position:relative;
 }
 
-/* ==========================
-   POSICIONAMIENTO EXACTO
-========================== */
+/* TRACK */
 
-/* Flecha volver */
-.back {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 80px;
-  height: 80px;
-  z-index: 10;
+.slides{
+display:flex;
+width:100%;
+height:100%;
+transition:transform 0.4s ease-in-out;
 }
 
-/* Producto destacado (columna izquierda grande) */
-.featured {
-  grid-column: 1 / 2;
-  grid-row: 1 / 3;
+/* SLIDE */
+
+.slide{
+min-width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#fff;
+background-color: #e52321;
 }
 
-/* Grid derecha superior */
-.p1 {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
+/* IMAGEN */
+/*Opcion 2*/
+.slide img{
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
-.p2 {
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
-}
-
-/* Grid derecha medio */
-.p3 {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-}
-
-.p4 {
-  grid-column: 3 / 4;
-  grid-row: 2 / 3;
-}
-
-/* Fila inferior derecha */
-.p5 {
-  grid-column: 2 / 4;
-  grid-row: 3 / 4;
-}
-
-/* Promos bancarias inferior izquierda */
-.banks {
-  grid-column: 1 / 2;
-  grid-row: 3 / 4;
-}
-
-/* ==========================================
-   OPTIMIZACIÓN SIGNAGE
-========================================== */
-
-body {
-  background: #000; /* Para modo pantalla */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-img {
-  user-select: none;
-  pointer-events: none;
+/*Opcion 1*/
+.slide img{
+width:100%;
+height:100%;
+object-fit:contain; 
 }
 
 
+/* Boton----------------------------------------------------------------------------------------------------------------------- */
+/* =====================
+   BOTON VOLVER
+===================== */
+
+.btn-back{
+position:absolute;
+top:20px;
+top: 0;
+left:20px;
+left: 0;
+
+width:80px;
+height:80px;
+
+background:#16c35b;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:0 40px 40px 0;
+
+z-index:999;
+transition:transform .2s ease;
+}
+
+.btn-back:hover{
+transform:scale(1.05);
+}
+
+.btn-back .icon{
+width:40px;
+height:40px;
+
+stroke:white;
+stroke-width:3;
+fill:none;
+stroke-linecap:round;
+stroke-linejoin:round;
+}
